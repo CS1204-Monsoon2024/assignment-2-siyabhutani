@@ -10,7 +10,7 @@ private:
     std::vector<int> table;
     int currentSize;
     int elementCount;
-    const double LOAD_FACTOR_THRESHOLD = 0.8;
+    static const double LOAD_FACTOR_THRESHOLD; // Make it a static constant
 
     int hashFunction(int key) {
         return key % currentSize;
@@ -53,6 +53,18 @@ public:
         table.resize(currentSize, -1);
         elementCount = 0;
     }
+
+    // Copy constructor
+    HashTable(const HashTable& other) = default;
+
+    // Move constructor
+    HashTable(HashTable&& other) noexcept = default;
+
+    // Copy assignment operator
+    HashTable& operator=(const HashTable& other) = default;
+
+    // Move assignment operator
+    HashTable& operator=(HashTable&& other) noexcept = default;
 
     void insert(int key) {
         if (elementCount >= currentSize * LOAD_FACTOR_THRESHOLD) {
@@ -120,5 +132,8 @@ public:
         std::cout << std::endl;
     }
 };
+
+// Define the static constant
+const double HashTable::LOAD_FACTOR_THRESHOLD = 0.8;
 
 #endif
